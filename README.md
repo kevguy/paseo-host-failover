@@ -12,7 +12,7 @@ Host Failover keeps up to four routes for a host, such as SSH and Paseo's relay.
 - **Switch back.** The first route returns after it has passed three tests in a row. A route that drops again within half an hour of its return is left alone for longer each time, up to 30 minutes.
 - **Reconnect.** If the route passes its test but Paseo has stopped trying, or has not managed for 30 seconds, the plugin connects it again. If that does not help, it uses another route and tries this one later, after 1 to 30 minutes.
 - **Plain reasons.** "Tailscale looks off on this computer", "SSH refused the login", "SSH works, but Paseo is not running on that computer", "This route reaches a different computer's Paseo".
-- **Version check.** A host that is too old says so, with its version and the version it needs (0.13.0).
+- **Version check.** A host that is too old says so, with its version, the version it needs (0.13.0) and that the command line still reaches it.
 - **Desktop and phone**, with a history of every switch.
 
 Automatic switching is **off** until you turn it on for a host.
@@ -38,7 +38,7 @@ A pairing link is a full key to the other computer. Host Failover keeps connecti
 
 ## What it never does
 
-It does not add or remove hosts, replace a host's identity, change `~/.ssh/config`, start or stop Tailscale, or run anything on the other computer. A test opens a Paseo connection, reads the version and closes it. While a host is offline its routes are tested with growing pauses (a refused SSH login after 1, 2, 4, then up to 10 minutes). With automatic off, only the route in use is tested. While automatic is on and the host is online, the plugin also opens a TCP connection to the port in use about every 10 seconds, and while a fallback is in use it tests the routes before it about every 15 seconds, less often if they refuse.
+It does not add or remove hosts, replace a host's identity, change `~/.ssh/config`, start or stop Tailscale, or run anything on the other computer. A test opens a Paseo connection, reads the version and closes it. While a host is offline its routes are tested with growing pauses (a refused SSH login after 1, 2, 4, then up to 10 minutes). With automatic off, only the route in use is tested. The route in use is also tested when its host comes online and every 6 hours, to read the version. While automatic is on and the host is online, the plugin also opens a TCP connection to the port in use about every 10 seconds, and while a fallback is in use it tests the routes before it about every 15 seconds, less often if they refuse.
 
 If you change a host's connection outside the plugin, Host Failover leaves that host alone until you choose a route.
 

@@ -8,5 +8,13 @@
   "media": [
     "assets/failover-desktop.png",
     "assets/failover-phone.png"
+  ],
+  "build": [
+    [
+      "npm",
+      "ci",
+      "--omit=dev",
+      "--ignore-scripts"
+    ]
   ]
 }

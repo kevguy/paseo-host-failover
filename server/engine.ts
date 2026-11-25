@@ -144,6 +144,7 @@ export class Engine {
     });
     rt.checks.set(route.id, result);
     if (refusals.has(result.code)) grow(rt.refused, route.id, this.deps.now(), MIN, 10 * MIN); else rt.refused.delete(route.id);
+    if (!result.ok) rt.passes.delete(route.id);
     if (result.version) rt.version = result.version;
     return result;
   }
@@ -339,7 +340,7 @@ export class Engine {
       : saved?.routes.length && !active && host.status !== "disabled" ? `${host.status === "online" ? "" : `${rt.hint ?? "Paseo cannot reach this host."} `}The current connection is not one of the saved routes, so nothing is switched. Choose a route.`
       : host.status === "online" ? null
       : host.status === "disabled" ? "Turned off in Paseo's host list."
-      : tooOld ? reasonFor("too_old", activeCheck?.version ?? null)
+      : tooOld ? `${reasonFor("too_old", activeCheck?.version ?? null)} Until then it works on the command line: paseo --host "<its connection>" ls.`
       : activeCheck && !activeCheck.ok ? activeCheck.reason
       : rt.hint ?? (host.status === "connecting" ? null : "Paseo cannot reach this host.");
     const by = active ? ` by ${active.name}` : "";
