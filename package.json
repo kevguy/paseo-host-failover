@@ -1,0 +1,31 @@
+{
+  "name": "@kevlai22/paseo-host-failover",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Several routes to each connected Paseo host, with tested automatic failover and switch back.",
+  "license": "MIT",
+  "type": "module",
+  "files": ["paseo-plugin.json", "OVERVIEW.md", "index.client.tsx", "index.server.ts", "client/", "server/", "shared/", "assets/", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.txt", "npm-shrinkwrap.json"],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts"
+  },
+  "dependencies": { "@getpaseo/client": "0.17.4" },
+  "devDependencies": {
+    "@getpaseo/plugin": "0.17.4",
+    "@tanstack/react-query": "^5.90.11",
+    "@types/node": "^26.6.6",
+    "@types/react": "~19.2.0",
+    "@types/ws": "^8.18.1",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "ws": "^8.20.0",
+    "zod": "^4.4.3"
+  },
+  "engines": { "node": ">=20" },
+  "repository": { "type": "git", "url": "git+https://github.com/kevguy/paseo-host-failover.git" },
+  "homepage": "https://github.com/kevguy/paseo-host-failover#readme",
+  "bugs": { "url": "https://github.com/kevguy/paseo-host-failover/issues" }
+}

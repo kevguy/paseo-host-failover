@@ -1,0 +1,12 @@
+{
+  "id": "paseo-host-failover",
+  "name": "Host Failover",
+  "description": "Several routes to each connected host, with tested automatic failover and switch back.",
+  "requirements": {
+    "paseo": ">=0.16.1"
+  },
+  "media": [
+    "assets/failover-desktop.png",
+    "assets/failover-phone.png"
+  ]
+}

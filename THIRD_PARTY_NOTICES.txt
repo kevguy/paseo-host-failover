@@ -1,0 +1,13 @@
+Host Failover installs these runtime packages from npm. Each package carries its own license text.
+
+@getpaseo/client 0.17.4: Apache-2.0
+@getpaseo/protocol 0.17.4: Apache-2.0
+@getpaseo/relay 0.17.4: Apache-2.0
+@noble/ciphers 2.4.0: MIT
+@noble/curves 2.4.0: MIT
+@noble/hashes 2.4.0: MIT
+base64-js 1.5.1: MIT
+semver 7.8.6: ISC
+tweetnacl 1.0.3: Unlicense
+ws 8.23.0: MIT
+zod 4.6.7: MIT
