@@ -257,6 +257,9 @@ test("automatic stays on when Paseo stops answering during a switch by hand", as
 });
 test("any failed test restarts the count of three before switching back", async () => {
   const w = new World(); await w.setUp(); w.down.set("ssh", "timeout"); await w.run(30); assert.deepEqual(w.updates, ["relay"]);
-  w.down.delete("ssh"); await w.run(35); w.down.set("ssh", "timeout"); await w.engine.testRoutes({ registrationId: "reg-1" }); w.down.delete("ssh");
-  await w.run(25); assert.deepEqual(w.updates, ["relay"]); await w.run(60); assert.deepEqual(w.updates, ["relay", "ssh"]);
+  w.down.delete("ssh"); w.checks = []; const passes = () => w.checks.filter(kind => kind === "ssh").length;
+  while (passes() < 2) await w.tick();
+  w.down.set("ssh", "timeout"); await w.engine.testRoutes({ registrationId: "reg-1" }); w.down.delete("ssh"); w.checks = [];
+  while (passes() < 2) await w.tick();
+  assert.deepEqual(w.updates, ["relay"]); while (passes() < 3) await w.tick(); assert.deepEqual(w.updates, ["relay", "ssh"]);
 });
