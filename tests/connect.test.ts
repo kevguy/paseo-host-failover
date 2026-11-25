@@ -35,7 +35,9 @@ test("a test checks identity, version and login", async () => {
 test("ssh failures give their real reason and leave no process", { skip: process.platform === "win32" }, async () => {
   const dir = directory(); const pids = join(dir, "pids"); writeFileSync(pids, "");
   // A stand-in ssh: -G answers with nothing, otherwise it fails with the given error.
-  writeFileSync(join(dir, "ssh"), `#!/bin/sh\n[ "$1" = "-G" ] && exit 0\necho $$ >> "${pids}"\n[ "$FAKE_SSH" = banner-hang ] && echo "Unauthorized access is prohibited." >&2 && exec sleep 30\n[ "$FAKE_SSH" = hang ] && exec sleep 30\necho "$FAKE_SSH" >&2\nexit 255\n`);
+  // It waits first, like a real login: if ssh exits before Paseo's first write, Linux can report
+  // "write EPIPE" and Paseo's tunnel then hides ssh's own message (2 of 100 tries in CI).
+  writeFileSync(join(dir, "ssh"), `#!/bin/sh\n[ "$1" = "-G" ] && exit 0\necho $$ >> "${pids}"\n[ "$FAKE_SSH" = banner-hang ] && echo "Unauthorized access is prohibited." >&2 && exec sleep 30\n[ "$FAKE_SSH" = hang ] && exec sleep 30\nsleep 0.1\necho "$FAKE_SSH" >&2\nexit 255\n`);
   chmodSync(join(dir, "ssh"), 0o755);
   const path = process.env.PATH; process.env.PATH = `${dir}:${path}`;
   try {
