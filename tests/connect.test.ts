@@ -31,7 +31,8 @@ test("a test checks identity, version and login", async () => {
   const old = await daemon({ serverId: "srv_good", version: "0.12.0", features: {} }); assert.equal(old.code, "too_old"); assert.match(old.reason!, /0\.12\.0.*0\.13\.0 or later/);
   assert.equal((await daemon(null, true)).code, "auth"); assert.equal((await daemon(null)).code, "timeout");
 });
-test("ssh failures give their real reason and leave no process", async () => {
+// The stand-in ssh is a shell script, which Windows cannot run.
+test("ssh failures give their real reason and leave no process", { skip: process.platform === "win32" }, async () => {
   const dir = directory(); const pids = join(dir, "pids"); writeFileSync(pids, "");
   // A stand-in ssh: -G answers with nothing, otherwise it fails with the given error.
   writeFileSync(join(dir, "ssh"), `#!/bin/sh\n[ "$1" = "-G" ] && exit 0\necho $$ >> "${pids}"\n[ "$FAKE_SSH" = banner-hang ] && echo "Unauthorized access is prohibited." >&2 && exec sleep 30\n[ "$FAKE_SSH" = hang ] && exec sleep 30\necho "$FAKE_SSH" >&2\nexit 255\n`);

@@ -108,7 +108,8 @@ test("no connection string is ever returned", async () => {
   const text = JSON.stringify(outputs);
   for (const secret of [KEY, encodeURIComponent(KEY), "PLANTED", "alex@", "srv_build?", "key="]) assert.ok(!text.includes(secret), secret);
   const file = join(w.dir, "routes.json");
-  assert.ok(readFileSync(file, "utf8").includes("PLANTEDPASSWORD")); assert.equal(statSync(file).mode & 0o777, 0o600); assert.equal(statSync(w.dir).mode & 0o777, 0o700);
+  assert.ok(readFileSync(file, "utf8").includes("PLANTEDPASSWORD")); // Windows has no file modes.
+  if (process.platform !== "win32") { assert.equal(statSync(file).mode & 0o777, 0o600); assert.equal(statSync(w.dir).mode & 0o777, 0o700); }
 });
 test("routes survive a restart and a damaged file is never replaced", async () => {
   const w = new World(); await w.setUp(); const again = new Store(w.dir); assert.equal((await again.load())[0]!.routes.length, 2);

@@ -52,7 +52,7 @@ If you change a host's connection outside the plugin, Host Failover leaves that 
 - **One daemon per folder.** Two copies of the plugin for the same daemon at once could overwrite each other's edits.
 - **Version** is known after a saved route has been tested.
 - "Tailscale looks off" means this computer has no Tailscale address. It is a good guess, not an answer from Tailscale.
-- Tested on macOS. Linux should work. Windows is untested, and file modes do not apply there.
+- Tested on macOS with a local SSH server and Paseo's relay. Not tested yet: a real Tailscale network, the native phone app, and running the plugin on Linux or Windows (CI runs the automated tests on all three, except the SSH failure test and file-mode checks on Windows). File modes do not apply on Windows.
 
 ## Measured
 

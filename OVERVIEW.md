@@ -10,4 +10,4 @@ Connections can be full keys to another computer. They are kept in one private f
 
 The plugin does not add or remove hosts, replace identities, edit SSH configuration, control Tailscale or run commands on the other computer. While a host is offline it tests saved routes with growing pauses. While automatic is on, it opens a short TCP connection to the port in use about every 10 seconds, and tests better routes about every 15 seconds while a fallback is in use.
 
-Needs Paseo 0.16.1 or later here and 0.13.0 or later on the hosts. After a Paseo restart, failover starts with the first app connection, agent turn or workspace change. Tested on macOS; Windows is untested. Listing images use fictional hosts.
+Needs Paseo 0.16.1 or later here and 0.13.0 or later on the hosts. After a Paseo restart, failover starts with the first app connection, agent turn or workspace change. Tested on macOS; not yet on Linux or Windows. Listing images use fictional hosts.
